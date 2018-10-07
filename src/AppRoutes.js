@@ -7,8 +7,8 @@ import {
 import { connect } from 'react-redux'
 import history from './history'
 // COMPONENTS
-import Home from './pages/Home'
-import Login from './pages/Login'
+import Login from './containers/login/index';
+import Signup from './containers/signup';
 import './App.css'
 
 
@@ -17,8 +17,8 @@ class AppRoutes extends Component {
     return (
       <Router history={history}>
         <Switch >
-          <Route exact path="/" component={Home}></Route>
           <Route exact path="/login" component={Login}></Route>
+          <Route exact path="/signup" component={Signup}></Route>
           {/* <PrivateRoute path="/home" component={Home} isAuthenticated={this.props.user}></PrivateRoute> */}
           {/* <Route component={ErrorPage}></Route> */}
         </Switch>

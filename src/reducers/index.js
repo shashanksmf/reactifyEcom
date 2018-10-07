@@ -1,5 +1,3 @@
-import Login from './login';
+import auth from './auth';
 
-export default {
-  Login
-}
+export default { auth };

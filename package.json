@@ -5,6 +5,7 @@
   "dependencies": {
     "node-sass": "^4.9.3",
     "react": "^16.4.1",
+    "react-bootstrap-modal": "^4.2.0",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",

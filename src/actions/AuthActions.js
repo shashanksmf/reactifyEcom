@@ -1,19 +1,29 @@
-export const changeState = (email, password) => {
-  return {
-    type: 'CHANGE_STATE',
-    payload: { email, password }
-  }
-}
+import { SIGNUP_RESPONSE_SUCCESS, SIGNUP_RESPONSE_ERROR, HIDE_SIGNUP_ERROR } from './types';
 
-export const LoginAction = (email, password) => {
+export const SignUpAction = ({ email, password, mobile }) => {
   return dispatch => fetch("http://inspiresofttech.com/on_demand/api/register",
     {
       method: "POST",
-      body: JSON.stringify({ name: "shashank", email, password, "rememberToken": "abcasdsadsadsad", "user_role": "admin" })
+      body: JSON.stringify({ email, password, mobile })
     })
     .then(resp => resp.json())
-    .then(
-      data => { console.log("succ data", data); return dispatch({ type: "LOGIN_SUCCESS_RESPONSE", payload: data }) },
-      err => { console.log("Err data", err); return dispatch({ type: "LOGIN_SUCCESS_ERROR", payload: null }) }
-    )
+    .then(data => {
+      console.log("api rsponse");
+      if (data.code == "SUCCESS") {
+
+        return dispatch({ type: SIGNUP_RESPONSE_SUCCESS, payload: { userData: { email, password, mobile }, data } })
+      } else {
+        console.log("userdata error", email, password, mobile)
+        return dispatch({ type: SIGNUP_RESPONSE_ERROR, payload: { userData: { email, password, mobile }, data } })
+      }
+    },
+      err => {
+        return dispatch({ type: SIGNUP_RESPONSE_ERROR, payload: { userData: { email, password, mobile }, data: err } })
+      })
+}
+
+export const HideSignUpError = () => {
+  return {
+    type: HIDE_SIGNUP_ERROR
+  }
 }
