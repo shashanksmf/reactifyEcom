@@ -1,6 +1,9 @@
 // @flow
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+
 import { StrictMode } from "react";
+import './signup.css'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { SignUpAction, HideSignUpError } from './../../actions/AuthActions';
@@ -8,13 +11,17 @@ import './../../assets/scss/login/index.scss';
 import graphic1 from './../../assets/images/graphic1.png';
 
 class SignUp extends Component {
+
   state = {
     mobile: '',
-    email: '',
+    email:'',
     password: '',
     signupResponse: {
       code: null
-    }
+    },
+    isMobileValid:false,
+    isOtpSent:false,
+    isOtpErr:false,
   }
 
   static getDerivedStateFromProps(newProps, prevState) {
@@ -26,18 +33,81 @@ class SignUp extends Component {
         }, 3000)
       }
       return {
-        ...prevState, ...newProps.users.auth
+        ...prevState, ...newProps.users.auth,
       }
     }
     return null;
   }
 
-
   submitLogin = () => {
-    this.props.HideSignUpError();
+    //this.props.HideSignUpError();
     this.props.SignUpAction({ ...this.state });
   }
+  validateMobileNo=()=>{
+    this.setState({
+      isOtpSent: true
+    })
+    this.sendOTP();
+  }
+ sendOTP=()=>{
+  
+   var mobile=this.state.mobile;
+   mobile='+91'+mobile;
+   console.log("OTP Send==>",mobile);
+   
+  function loadDoc() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+         
+      }
+    };
+    var myurl = new URL("http://control.msg91.com/api/sendotp.php");
+    myurl.searchParams.set('authkey', '241793ATRBFnmO3h5bbb581a');
+    myurl.searchParams.set('message', 'Your verification code is ##OTP##');
+    myurl.searchParams.set('sender', 'OTPABC');
+    myurl.searchParams.set('mobile', mobile);
+    xhttp.open("POST", myurl.href, true);
+    xhttp.withCredentials = true;
+    xhttp.send();
+  }
+  loadDoc();  
+ }
+ 
+ verifyOTP=(event)=>{
+  
+        this.setState({
+          isMobileValid: true
+        })
+   var mobile=this.state.mobile;
+   var otp=event.target.value;
+   console.log("verify OTP");
+   
+   mobile='+91'+mobile;
+  function loadDoc() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      console.log(this.responseText);
+      if (this.readyState == 4 && this.status == 200) {
+        // var obj = JSON.parse()
+        // this.setState({
+        //   isOtpErr: true
+        // })
+        
 
+      }
+    };
+    var myurl = new URL("https://control.msg91.com/api/verifyRequestOTP.php");
+    myurl.searchParams.set('authkey', '241793ATRBFnmO3h5bbb581a');
+    myurl.searchParams.set('otp', otp);
+    myurl.searchParams.set('mobile', mobile);
+    xhttp.open("POST", myurl.href, true);
+    xhttp.withCredentials = true;
+    xhttp.send();
+  }
+  loadDoc();  
+ }
+ 
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
@@ -50,8 +120,7 @@ class SignUp extends Component {
     return (
       <div className="check">
         <div className="content">
-
-          <div className="checkleft">
+         <div className="checkleft">
             <div className="phase1">
               <div className="pbody">
                 <div className="phead" style={{ backgroundColor: '#FFFFFF' }}>
@@ -67,13 +136,21 @@ class SignUp extends Component {
                     {signUpResponseCode == "SUCCESS" ? <div className="alert alert-success">
                       <strong>SignUp</strong> {message} Please Login
                     </div> : null}
-                    <div className="login-box"><input type="number" className="txtt" name="mobile" placeholder="Your Mobile Number" onChange={this.handleChange} /></div>
+                    <div className="login-box"><input type="number" className="txtt" name="mobile" value={this.state.mobile} placeholder="Your Mobile Number" onChange={this.handleChange} /></div>
                     <br /><br /><br /><br />
-                    <div className="login-box"><input type="password" className="txtt" name="password" placeholder="Create New Password" onChange={this.handleChange} /></div>
+                    <div className={(this.state.isMobileValid)? '':'hidden' }><label>OTP Sent to Mobile</label> <span  className="floatRight" onClick={this.resendOTP}><a href="#">Resend?</a></span></div>
+                    <br />
+                    <div  className= {('login-box ' +(this.state.isOtpSent? '':'hidden') )} ><input type="number" className="txtt" name="otp" placeholder="Enter OTP sent to mobile" onChange={this.verifyOTP} /></div>
                     <br /><br /><br /><br />
-                    <div className="login-box"><input type="email" className="txtt" name="email" placeholder="Your Email ID" onChange={this.handleChange} /></div>
-                    <br /><br /><br />
-                    <button className="butt1" onClick={this.submitLogin}>Submit</button>
+                     <div className= {('login-box ' +(this.state.isOtpSent? '':'hidden')) }><input type="password"  className="txtt" name="password" placeholder="Create New Password" onChange={this.handleChange} /></div>
+                    <br /><br /><br /><br />
+                    {/* <div className="login-box"><input type="email" className="txtt" name="email" placeholder="Your Email ID" onChange={this.handleChange} /></div>
+                    <br /><br /><br /> */}
+                    {/* <button className="butt1" onClick={this.submitLogin}>Submit</button> */}
+                    <button className= {('butt1 ' +(this.state.isOtpSent? 'hidden':'')) } onClick={this.validateMobileNo}>Continue</button> 
+                    {/* <button className= {('butt1 ' +(this.state.isOtpSent? '':'hidden')) } onClick={this.verifyOTP}>Verify</button>  */}
+                    <button id="btnSignUp"  className={('butt1 '+(this.state.isMobileValid? '':'hidden')) } onClick={this.submitLogin}>SignUp</button> 
+
                     <a><button className="butt2" onClick={() => this.props.history.push('login')}>Existing User? Log in </button></a>
                   </div>
                 </div>
