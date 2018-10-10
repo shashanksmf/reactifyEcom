@@ -9,6 +9,7 @@ import history from './history'
 // COMPONENTS
 import Login from './containers/login/index';
 import Signup from './containers/signup';
+import Home from './containers/home';
 import './App.css'
 
 
@@ -18,7 +19,9 @@ class AppRoutes extends Component {
       <Router history={history}>
         <Switch >
           <Route exact path="/login" component={Login}></Route>
-          <Route exact path="/signup" component={Signup}></Route>          
+          <Route exact path="/signup" component={Signup}></Route>     
+          <Route exact path="/#" component={Home}></Route>          
+     
           {/* <PrivateRoute path="/home" component={Home} isAuthenticated={this.props.user}></PrivateRoute> */}
           {/* <Route component={ErrorPage}></Route> */}
         </Switch>

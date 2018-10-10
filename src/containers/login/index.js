@@ -13,17 +13,15 @@ class Login extends Component {
   state ={
     mobile:null,
     password:'',
-    loginValid:false
+    loginValid:false,
   }
 
   loginUser = () => {
     console.log("Login user data==>",this.state.password,this.state.mobile);
     var mobile=this.state.mobile;
     var password=this.state.password;
-
-    var isEmailLogin=(mobile.indexOf('@') >=0? true:false)
     if(mobile&&password ){
-      if(isEmailLogin){
+      if(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.mobile)){
         console.log("isEamil login==>",mobile);
         
         
@@ -39,12 +37,12 @@ class Login extends Component {
             this.setState({
               loginValid: true
             })
+            localStorage.setItem("user_id",data.response.user[0].id);
             
           }
         },err=>{console.log("error for verify login",err)})
       }
       else{
-        // JSON.stringify({ mobile:mobile, password:password })
         fetch("http://inspiresofttech.com/on_demand/api/mobile_login",
         {
           method: "POST",
@@ -57,63 +55,58 @@ class Login extends Component {
             this.setState({
               loginValid: true
             })
+            localStorage.setItem("user_id",data.response.user[0].id);
           }
         },err=>{console.log("mobile_login err",err)})
       }
-  
-      // axios({
-      //   method: 'post',
-      //   url: 'http://inspiresofttech.com/on_demand/api/mobile_login',
-      //   data: {
-      //   mobile:mobile, 
-      //   password:password
-      //   }
-      // })
-      // .then(function(response) {
-      //   console.log("response mobile login==>",response);
-        
-      // }).catch(function (error) {
-      //     console.log("mobile login  error==>",error);
-      //   });
-
-
-      // axios.post('http://inspiresofttech.com/on_demand/api/mobile_login', {
-      //   mobile:mobile, 
-      //   password:password
-      // })
-      // .then(function (response) {
-      //   console.log("mobile login Response==>",response);
-      // })
-      // .catch(function (error) {
-      //   console.log("mobile login  error==>",error);
-      // });
     }
     
   
   }
 
-  
-  forgotpassword=()=>{
+  validateEmail=()=>{
    
-    fetch("http://inspiresofttech.com/on_demand/api/forgotpassword",
-    {
-      method: "POST",
-      body: JSON.stringify({ email:"a4coderss@gmail.com"})
-    })
-    .then(resp => resp.json())
-    .then(data => {
-      console.log("api forgotpassword rsponse",data);
-      if(data.code== "SUCCESS"){
-        this.setState({
-          loginValid: true
-        })
-      }
-    },err=>{console.log("forgotpassword err",err)})
+    var emailRegex='/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/';
+    if(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.mobile)){
+     
+       return true;
+    }
+    else{
+     return false      
+    }
+  
+  }
+  forgotpassword=()=>{
+   var isValidEmail=false
+   isValidEmail= this.validateEmail();
+      console.log("Forgot email==>",this.state.mobile);
+    
+    if(isValidEmail){
+      fetch("http://inspiresofttech.com/on_demand/api/forgotpassword",
+      {
+        method: "POST",
+        body: JSON.stringify({ email:this.state.mobile})
+      })
+      .then(resp => resp.json())
+      .then(data => {
+        if(data.code){
+          var tempCode=data.code;
+          if(tempCode=="Failure"){
+            alert("forget Password fail "+data.message)
+          }
+        }
+        console.log("api forgotpassword rsponse",data);
+     
+      },err=>{console.log("forgotpassword err",err)})
+    }
+
  
    }
 
   changePassword=()=>{
-   var user_id="5"
+   var user_id=(localStorage.getItem('user_id'))?localStorage.getItem('user_id'):"5";
+    console.log("userID==>",user_id);
+    
    var old_password="12345";
    var new_password="123445";
    fetch("http://inspiresofttech.com/on_demand/api/changePassword",
@@ -125,9 +118,8 @@ class Login extends Component {
    .then(data => {
      console.log("api changePassword rsponse",data);
      if(data.code== "SUCCESS"){
-       this.setState({
-         loginValid: true
-       })
+      console.log("Password changed sucessfully");
+      
      }
    },err=>{console.log("changePassword err",err)})
 
