@@ -8,6 +8,35 @@ import arrow from '../../assets/images/arro-right.png';
 import drop from '../../assets/images/drop.png';
 
 class Header extends Component {
+  
+constructor(){
+  // Dropdown funcation start
+  super();
+
+  this.state = {
+        displayMenu: false,
+      };
+ 
+   this.showDropdownMenu = this.showDropdownMenu.bind(this);
+   this.hideDropdownMenu = this.hideDropdownMenu.bind(this);
+ 
+ };
+ 
+ showDropdownMenu(event) {
+     event.preventDefault();
+     this.setState({ displayMenu: true }, () => {
+     document.addEventListener('click', this.hideDropdownMenu);
+     });
+   }
+ 
+   hideDropdownMenu() {
+     this.setState({ displayMenu: false }, () => {
+       document.removeEventListener('click', this.hideDropdownMenu);
+     });
+ 
+   }// dropdown funcation End
+
+
   render() {
     return (
       <div id="parent">
@@ -70,34 +99,39 @@ class Header extends Component {
           </div>{/*misc*/}
         </div>{/*content*/}
       </div>
+
+
+
+
+
       <div className="menu">
         <div className="content">
-          <div className="men" >
+          <div className="men" onClick={this.showDropdownMenu} >
             <a href="#">Electrical </a>
             <img src={drop} width={8} style={{marginLeft: 2}} />
           </div>{/*men*/}
-          <div className="men" onmouseover="ope();">
+          <div className="men"onClick={this.showDropdownMenu}>
             <a href="#">New</a>
             <img src={drop} width={8} style={{marginLeft: 2}} />
           </div>{/*men*/}
-          <div className="men" onmouseover="ope();">
+          <div className="men"onClick={this.showDropdownMenu}>
             <a href="#">Men</a>
             <img src={drop} width={8} style={{marginLeft: 2}} />
           </div>{/*men*/}
           <div className="men">
-            <a href="#" onmouseover="ope();">Woman</a>
+            <a href="#"onClick={this.showDropdownMenu}>Woman</a>
             <img src={drop} width={8} style={{marginLeft: 2}} />
           </div>{/*men*/}
           <div className="men">
-            <a href="#" onmouseover="ope();">Kidswear</a>
+            <a href="#"onClick={this.showDropdownMenu}>Kidswear</a>
             <img src={drop} width={8} style={{marginLeft: 2}} />
           </div>{/*men*/}
           <div className="men">
-            <a href="#" onmouseover="ope();">Furniture</a>
+            <a href="#"onClick={this.showDropdownMenu}>Furniture</a>
             <img src={drop} width={8} style={{marginLeft: 2}} />
           </div>{/*men*/}
           <div className="men">
-            <a href="#" onmouseover="ope();">Books</a>
+            <a href="#"onClick={this.showDropdownMenu}>Books</a>
             <img src={drop} width={8} style={{marginLeft: 2}} />
           </div>{/*men*/}
           <div className="men">
@@ -106,7 +140,13 @@ class Header extends Component {
         </div>{/*content*/}
       </div>
 
-      
+
+
+      {/* Add Drowdown function */}
+      {this.state.displayMenu ?(
+
+
+
       <div className="content">
         <div id="smbo" style={{ display: 'block' }}>
           <div className="submenu">
@@ -392,7 +432,19 @@ class Header extends Component {
           </div>{/*submenu*/}
         </div>
       </div>
+          ):
+          (
+            null
+          )
+        }
 </div>
+
+  
+
+
+
+
+
 
 
 
