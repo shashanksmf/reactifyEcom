@@ -10,6 +10,8 @@ import history from './history'
 import Login from './containers/login/index';
 import Signup from './containers/signup';
 import Home from './containers/home';
+import ForgetPassword from './containers/forgetPassword'
+import './assets/scss/_fonts.scss';
 import './App.css'
 
 
@@ -20,7 +22,9 @@ class AppRoutes extends Component {
         <Switch >
           <Route exact path="/login" component={Login}></Route>
           <Route exact path="/signup" component={Signup}></Route>     
-          <Route exact path="/#" component={Home}></Route>          
+          <Route exact path="/" component={Home}></Route> 
+          <Route exact path="/forgetPassword" component={ForgetPassword}></Route>          
+
      
           {/* <PrivateRoute path="/home" component={Home} isAuthenticated={this.props.user}></PrivateRoute> */}
           {/* <Route component={ErrorPage}></Route> */}

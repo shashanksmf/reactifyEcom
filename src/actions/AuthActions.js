@@ -10,7 +10,8 @@ export const SignUpAction = ({ email, password, mobile }) => {
     .then(data => {
       console.log("api rsponse");
       if (data.code == "SUCCESS") {
-
+        console.log("User Registerd Successfully",data);
+        
         return dispatch({ type: SIGNUP_RESPONSE_SUCCESS, payload: { userData: { email, password, mobile }, data } })
       } else {
         console.log("userdata error", email, password, mobile)

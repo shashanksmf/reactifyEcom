@@ -29,6 +29,7 @@ class SignUp extends Component {
     if (responseCode !== prevState.signupResponse.code) {
       if (responseCode == "SUCCESS") {
         setTimeout(() => {
+          newProps.HideSignUpError();
           newProps.history.push('login')
         }, 3000)
       }
@@ -39,8 +40,8 @@ class SignUp extends Component {
     return null;
   }
 
-  submitLogin = () => {
-    //this.props.HideSignUpError();
+  submitSignup = () => {
+    this.props.HideSignUpError();
     this.props.SignUpAction({ ...this.state });
   }
   validateMobileNo=()=>{
@@ -137,20 +138,24 @@ class SignUp extends Component {
                       <strong>SignUp</strong> {message} Please Login
                     </div> : null}
                     <div className="login-box"><input type="number" className="txtt" name="mobile" value={this.state.mobile} placeholder="Your Mobile Number" onChange={this.handleChange} /></div>
-                    <br /><br /><br /><br />
+                    <br /><br /><br />
+                    {this.state.isOtpSent ? null :<button id="btnSignUp"  className="butt1" onClick={this.validateMobileNo}>Continue</button> }
+
+                    {/* <button className= {('butt1 ' +(this.state.isOtpSent? 'hidden':'')) } onClick={this.validateMobileNo}></button>  */}
+
                     <div className={(this.state.isMobileValid)? '':'hidden' }><label>OTP Sent to Mobile</label> <span  className="floatRight" onClick={this.resendOTP}><a href="#">Resend?</a></span></div>
                     <br />
                     <div  className= {('login-box ' +(this.state.isOtpSent? '':'hidden') )} ><input type="number" className="txtt" name="otp" placeholder="Enter OTP sent to mobile" onChange={this.verifyOTP} /></div>
                     <br /><br /><br /><br />
+                    <div className={('login-box ' +(this.state.isOtpSent? '':'hidden')) }><input type="email" className="txtt" name="email" placeholder="Your Email ID" onChange={this.handleChange} /></div>
+                    <br /><br /><br />
                      <div className= {('login-box ' +(this.state.isOtpSent? '':'hidden')) }><input type="password"  className="txtt" name="password" placeholder="Create New Password" onChange={this.handleChange} /></div>
                     <br /><br /><br /><br />
-                    {/* <div className="login-box"><input type="email" className="txtt" name="email" placeholder="Your Email ID" onChange={this.handleChange} /></div>
-                    <br /><br /><br /> */}
+                   
                     {/* <button className="butt1" onClick={this.submitLogin}>Submit</button> */}
-                    <button className= {('butt1 ' +(this.state.isOtpSent? 'hidden':'')) } onClick={this.validateMobileNo}>Continue</button> 
                     {/* <button className= {('butt1 ' +(this.state.isOtpSent? '':'hidden')) } onClick={this.verifyOTP}>Verify</button>  */}
-                    <button id="btnSignUp"  className={('butt1 '+(this.state.isMobileValid? '':'hidden')) } onClick={this.submitLogin}>SignUp</button> 
-
+                     
+                    {this.state.isOtpSent ? <button id="btnSignUp"  className="butt1" onClick={this.submitSignup}>SignUp</button> : null}
                     <a><button className="butt2" onClick={() => this.props.history.push('login')}>Existing User? Log in </button></a>
                   </div>
                 </div>

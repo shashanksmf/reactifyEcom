@@ -6,6 +6,7 @@ import lock from '../../assets/images/lock.png';
 import shoping from '../../assets/images/shoping.png';
 import arrow from '../../assets/images/arro-right.png';
 import drop from '../../assets/images/drop.png';
+import './../../assets/scss/header/index.scss';
 
 class Header extends Component {
   
@@ -39,7 +40,7 @@ constructor(){
 
   render() {
     return (
-      <div id="parent">
+      <div id="parent" className="headerComponent">
       <div className="header" >
         <div className="content">
           <div className="logo">
@@ -82,7 +83,7 @@ constructor(){
                   <img src={lock} width={15} className="mm" />
                 </td>
                 <td>
-                  <a href="login.html">Login</a>
+                  <a href="/login">Login</a>
                 </td>
               </tr>
               </tbody></table>
@@ -92,7 +93,7 @@ constructor(){
                   <img src={person} width={10} className="mmm" />
                 </td>
                 <td>
-                  <a href="register.html">Register</a>
+                  <a href="/signup">Register</a>
                 </td>
               </tr>
               </tbody></table>

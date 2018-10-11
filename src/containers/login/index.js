@@ -13,7 +13,14 @@ class Login extends Component {
   state ={
     mobile:null,
     password:'',
-    loginValid:false,
+    loginValid:null,
+    LoginError:false,
+    ForgotPwdError:null,
+    isLogin:false,
+    LoginErrorResp:'',
+    ForgotPwdErrorResp:'',
+    ForgotPwdSuccess:false,
+    requestClose:false,
   }
 
   loginUser = () => {
@@ -38,8 +45,18 @@ class Login extends Component {
               loginValid: true
             })
             localStorage.setItem("user_id",data.response.user[0].id);
+
             
           }
+          else{
+               this.setState({
+                 
+                LoginErrorResp:data.response.message,
+                loginValid:false
+    
+               })
+    
+              }
         },err=>{console.log("error for verify login",err)})
       }
       else{
@@ -52,12 +69,25 @@ class Login extends Component {
         .then(data => {
           console.log("api mobile_login rsponse",data);
           if(data.code== "SUCCESS"){
+
             this.setState({
-              loginValid: true
+              isLogin: true
             })
             localStorage.setItem("user_id",data.response.user[0].id);
           }
-        },err=>{console.log("mobile_login err",err)})
+          else{
+           this.setState({
+             
+            LoginErrorResp:data.response.message,
+            LoginError:true
+
+           })
+
+          }
+        },err=>{
+          // return dispatch({ type: SIGNUP_RESPONSE_SUCCESS, payload: { userData: { email, password, mobile }, data } })
+
+          console.log("mobile_login err",err)})
       }
     }
     
@@ -76,32 +106,9 @@ class Login extends Component {
     }
   
   }
-  forgotpassword=()=>{
-   var isValidEmail=false
-   isValidEmail= this.validateEmail();
-      console.log("Forgot email==>",this.state.mobile);
-    
-    if(isValidEmail){
-      fetch("http://inspiresofttech.com/on_demand/api/forgotpassword",
-      {
-        method: "POST",
-        body: JSON.stringify({ email:this.state.mobile})
-      })
-      .then(resp => resp.json())
-      .then(data => {
-        if(data.code){
-          var tempCode=data.code;
-          if(tempCode=="Failure"){
-            alert("forget Password fail "+data.message)
-          }
-        }
-        console.log("api forgotpassword rsponse",data);
-     
-      },err=>{console.log("forgotpassword err",err)})
-    }
 
- 
-   }
+  
+
 
   changePassword=()=>{
    var user_id=(localStorage.getItem('user_id'))?localStorage.getItem('user_id'):"5";
@@ -126,7 +133,8 @@ class Login extends Component {
   }
   handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      loginValid:null,
     })
   }
 
@@ -144,16 +152,26 @@ class Login extends Component {
                   <img src={graphic1} width="80%" className="graphic1" />
                 </div>
                 <div className="col2">
-                <div  className= "login-box" ><input type="text" className="txtt" name="mobile" placeholder="Enter  email /mobile No" onChange={this.handleChange} /></div>
+                {this.state.loginValid == false ?  <div  className='alert alert-warning '>
+                  <strong>Sign In  </strong>{this.state.LoginErrorResp}
+                </div>: null}
+              
+               
+                
+                {/* <div className={('alert alert-warning ' +(this.state.ForgotPwdError? '':'hidden') )}><strong>Sign In  </strong>{this.state.ForgotPwdErrorResp}</div> */}
+
+
+                <div  className= "login-box" ><input type="text" className="txtt" name="mobile" placeholder="Registered  Email ID /mobile Number" onChange={this.handleChange} /></div>
                     <br /><br /><br /><br />
                      <div className= "login-box ">
-                     <input type="password"  className="txtt" name="password" placeholder="Enter Password" onChange={this.handleChange} />
-                      </div>
-                      <div className="floatRight" onClick={this.changePassword}><a href="#">change Password?</a></div>
+                     <input type="password"  className="txtt" name="password" placeholder="Edhik Password" onChange={this.handleChange} />
+                      </div><br />
+                      <br /><br />
+                      <div className="floatRight marginLeftTen" onClick={this.changePassword}><a href="#" className="textDecorationNone">change Password?</a></div>
 
-                     <div className="floatRight" onClick={this.forgotpassword}><a href="#">forgot Password?</a></div>
+                     <div className="floatRight marginLeftTen"><a href="/forgetPassword"className="textDecorationNone">forgot Password?</a></div>
                     
-                    <br /><br /><br /><br />
+                    <br /><br />
                     <button className= "butt1" onClick={this.loginUser}>Login</button> 
 
                   <a><button className="butt2" onClick={() => this.props.history.push('signup')}>New to Edhik?Signup </button></a>
