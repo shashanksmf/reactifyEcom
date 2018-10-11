@@ -107,9 +107,6 @@ class Login extends Component {
   
   }
 
-  
-
-
   changePassword=()=>{
    var user_id=(localStorage.getItem('user_id'))?localStorage.getItem('user_id'):"5";
     console.log("userID==>",user_id);

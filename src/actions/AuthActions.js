@@ -2,25 +2,28 @@ import { SIGNUP_RESPONSE_SUCCESS, SIGNUP_RESPONSE_ERROR, HIDE_SIGNUP_ERROR } fro
 
 export const SignUpAction = ({ email, password, mobile }) => {
   return dispatch => fetch("http://inspiresofttech.com/on_demand/api/register",
-    {
-      method: "POST",
-      body: JSON.stringify({ email, password, mobile })
+  {
+    method: "POST",
+    body: JSON.stringify({ email, password, mobile })
+  })
+  .then(resp => resp.json())
+  .then(data => {
+    console.log("api rsponse");
+    if (data.code == "SUCCESS") {
+      console.log("User Registerd Successfully",data);
+      
+      return dispatch({ type: SIGNUP_RESPONSE_SUCCESS, payload: { userData: { email, password, mobile }, data } })
+    } else {
+      console.log("userdata error", email, password, mobile)
+      return dispatch({ type: SIGNUP_RESPONSE_ERROR, payload: { userData: { email, password, mobile }, data } })
+    }
+  },
+    err => {
+      return dispatch({ type: SIGNUP_RESPONSE_ERROR, payload: { userData: { email, password, mobile }, data: err } })
     })
-    .then(resp => resp.json())
-    .then(data => {
-      console.log("api rsponse");
-      if (data.code == "SUCCESS") {
-        console.log("User Registerd Successfully",data);
-        
-        return dispatch({ type: SIGNUP_RESPONSE_SUCCESS, payload: { userData: { email, password, mobile }, data } })
-      } else {
-        console.log("userdata error", email, password, mobile)
-        return dispatch({ type: SIGNUP_RESPONSE_ERROR, payload: { userData: { email, password, mobile }, data } })
-      }
-    },
-      err => {
-        return dispatch({ type: SIGNUP_RESPONSE_ERROR, payload: { userData: { email, password, mobile }, data: err } })
-      })
+ 
+
+
 }
 
 export const LoginAction = ({ email, password, mobile }) => {
