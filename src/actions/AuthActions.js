@@ -21,8 +21,6 @@ export const SignUpAction = ({ email, password, mobile }) => {
     err => {
       return dispatch({ type: SIGNUP_RESPONSE_ERROR, payload: { userData: { email, password, mobile }, data: err } })
     })
- 
-
 
 }
 

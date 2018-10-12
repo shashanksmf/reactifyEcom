@@ -1,8 +1,6 @@
 @import './../variables.scss';
 
 .headerComponent {
-
-
 .container {
     max-width: 1600px;
     height: auto;
@@ -262,10 +260,13 @@ position:fixed;
 float:left;
 z-index:200;
 }
+
 .content {
     max-width: 1185px;
     height: auto;
     margin: 0px auto;
+    position: relative;
+
 }
 .logo
 {
@@ -377,19 +378,41 @@ margin-top:57px;
 float:left;
 box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 z-index:10;
+
+
 }
 .men
 {
-cursor:pointer;
+
 width:12.5%;
-height:45px;
-padding:0px;
 margin:0px;
-text-align:center;
-float:left;
+     cursor: pointer;
+    height: 45px;
+    padding: 0px;
+    text-align: center;
+    float: left;
+    
+    
+     &:hover {
+         .content {
+             display: block;
+             position: fixed;
+             left: 10%;
+             right: 10%;
+             top: 100px;
+             background: white;
+         }
+     }
+     .content {
+        display: none;
+    }
 }
 .men a
 {
+ width: 90%;
+overflow-x: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
 color:#212121;
 font-family:'myr',Arial, Helvetica, sans-serif;
 font-size:14px;
@@ -1057,8 +1080,8 @@ display:none;
 .submenu
 {
 
-position:absolute;
-background-color:#FFFFFF;
+// position:absolute;
+// background-color:#FFFFFF;
 width:90%;
 height:500px;
 left:5%;
@@ -1139,7 +1162,8 @@ color:#ea4335;
 width:100%;
 height:auto;
 padding:0px;
-margin:0px;
+// margin:0px;
+margin: -23px 0px -10px 0px;
 float:left;
 }
 .link

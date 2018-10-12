@@ -97,8 +97,7 @@ class Login extends Component {
   validateEmail=()=>{
    
     var emailRegex='/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/';
-    if(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.mobile)){
-     
+    if(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.mobile)){   
        return true;
     }
     else{
