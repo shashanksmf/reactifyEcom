@@ -7,6 +7,8 @@ import sidear from '../../assets/images/sidear.png'
 import shoping from '../../assets/images/shoping.png';
 import arrow from '../../assets/images/arro-right.png';
 import drop from '../../assets/images/drop.png';
+import dar from '../../assets/images/dar.png';
+
 import './../../assets/scss/header/index.scss';
 import './header.css'
 
@@ -128,7 +130,7 @@ class Header extends Component {
               return (
                 <div className="men">
                   <a href="#">{item.categories_name}</a>
-                  <img src="images/dar.png" width={8} style={{marginLeft: 2}} />
+                  <img src={dar} width={8} style={{marginLeft: 2}} />
                   <div className="content">
         <div id="smbo" style={{display: 'block'}}>
           <div className="submenu">
