@@ -8,6 +8,10 @@ import shoping from '../../assets/images/shoping.png';
 import arrow from '../../assets/images/arro-right.png';
 import drop from '../../assets/images/drop.png';
 import dar from '../../assets/images/dar.png';
+import ic1 from '../../assets/images/ic1.png';
+import ic2 from '../../assets/images/ic2.png';
+import ic3 from '../../assets/images/ic3.png';
+
 
 import './../../assets/scss/header/index.scss';
 import './header.css'
@@ -57,7 +61,7 @@ class Header extends Component {
               <table height={56} cellPadding={0} cellSpacing={0}>
                 <tbody><tr>
                     <td valign="middle">
-                      <a href="#"><img src="images/logo.png" width={92} border={0} /></a>
+                      <a href="#"><img src={logo} width={92} border={0} /></a>
                     </td>
                   </tr>
                 </tbody></table>
@@ -69,7 +73,7 @@ class Header extends Component {
                   <table width={40} height={36} cellPadding={0} cellSpacing={0}>
                     <tbody><tr>
                         <td valign="middle" align="center">
-                          <img src="css/images/srch.png" width={16} style={{marginTop: 5, cursor: 'pointer'}} />
+                          <img src={serch} width={16} style={{marginTop: 5, cursor: 'pointer'}} />
                         </td>
                       </tr>
                     </tbody></table>
@@ -80,7 +84,7 @@ class Header extends Component {
               <table  height={56} style={{width: 'auto', borderRight: 'none'}} cellPadding={0} cellSpacing={0} border={0}>
                 <tbody><tr>
                     <td valign="middle">
-                      <a href="cart-item.html"><img src="images/ic3.png" width={23} className="m" /></a>
+                      <a href="cart-item.html"><img src={ic3} width={23} className="m" /></a>
                     </td>
                     <td>
                       <a href="" />
@@ -90,20 +94,20 @@ class Header extends Component {
               <table height={56} style={{width: 'auto'}} cellPadding={0} cellSpacing={0}>
                 <tbody><tr>
                     <td>
-                      <img src="images/ic2.png" width={15} className="mm" />
+                      <img src={ic2} width={15} className="mm" />
                     </td>
                     <td>
-                      <a href="login.html">Login</a>
+                      <a href={'/login'}>Login</a>
                     </td>
                   </tr>
                 </tbody></table>
               <table height={56} style={{width: 'auto'}} cellPadding={0} cellSpacing={0}>
                 <tbody><tr>
                     <td>
-                      <img src="images/ic1.png" width={10} className="mmm" />
+                      <img src={ic1} width={10} className="mmm" />
                     </td>
                     <td>
-                      <a href="register.html">Register</a>
+                      <a href={'/signup'}>Register</a>
                     </td>
                   </tr>
                 </tbody></table>
