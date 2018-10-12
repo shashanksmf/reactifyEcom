@@ -408,12 +408,16 @@ z-index:10;
         display: none;
     }
 }
+.men .menuWrapper{
+    width: 90%;
+    display: inline-block;
+    overflow-x: hidden;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+}
 .men a
 {
- width: 90%;
-overflow-x: hidden;
-white-space: nowrap;
-text-overflow: ellipsis;
+
 color:#212121;
 font-family:'myr',Arial, Helvetica, sans-serif;
 font-size:14px;
@@ -1144,7 +1148,6 @@ float:left;
 }
 .sec1head p
 {
-
 font-family:'myr',Arial, Helvetica, sans-serif;
 font-size:14px;
 text-decoration:none;
