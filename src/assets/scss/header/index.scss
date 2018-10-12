@@ -383,15 +383,16 @@ z-index:10;
 }
 .men
 {
-
-width:12.5%;
-margin:0px;
-     cursor: pointer;
+    width:12.5%;
+    margin:0px;
+    cursor: pointer;
     height: 45px;
     padding: 0px;
     text-align: center;
     float: left;
-    
+    display: flex;
+    align-items: center;
+    padding-right: 2%;
     
      &:hover {
          .content {
@@ -1191,4 +1192,16 @@ float:left;
 color:#ea4335;
 }
 
+.sec1head {
+    display: flex;
+    align-items: center;
+}
+.sec2 {
+    background-color: rgb(249, 249, 249);
+    width: 20%;
+    height: 500px;
+    float: left;
+    padding: 0px;
+    margin: 0px;
+}
 }
